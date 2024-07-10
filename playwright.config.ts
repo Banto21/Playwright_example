@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
-import path from 'path';
 
 // export const STORAGE_STATE = path.join(__dirname, 'playwright/.auth/user.json');
 
@@ -15,6 +14,9 @@ dotenv.config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  /* File used for global setup for all tests */
+  globalSetup: require.resolve('./tests/global-setup.ts'),
+
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -32,7 +34,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     testIdAttribute: 'data-test',
     trace: 'on-first-retry',
-    // storageState: 'state.json',
+    storageState: 'state.json',
     baseURL: process.env.BASE_URL
   },
 
